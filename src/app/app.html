@@ -1,0 +1,55 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row>
+            <img src="assets/icon/logo.png" style="width:100%;height:auto;">
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-header>
+ 
+  <ion-content padding>
+    <ion-list *ngIf="global.session">
+      <button menuClose ion-item detail-none>
+        <ion-icon item-start name="home"></ion-icon> Home</button>
+      <button *ngIf="global.accessLevel==='Student'" menuClose ion-item detail-none (click)="openPage(0)">
+        <ion-icon item-start name="briefcase"></ion-icon> My Skills</button>
+      <button *ngIf="global.accessLevel==='Student'" menuClose ion-item detail-none (click)="openPage(1)">
+        <ion-icon item-start name="clipboard"></ion-icon> My Applications</button>
+      <button *ngIf="global.accessLevel==='Student'" menuClose ion-item detail-none (click)="openPage(2)">
+        <ion-icon item-start name="chatboxes"></ion-icon> Chats</button>
+
+      <button *ngIf="global.accessLevel==='Employer'" menuClose ion-item detail-none (click)="openPage(3)">
+        <ion-icon item-start name="clipboard"></ion-icon> Jobs/Tasks</button>
+      <button *ngIf="global.accessLevel==='Employer'" menuClose ion-item detail-none (click)="openPage(2)">
+        <ion-icon item-start name="chatboxes"></ion-icon> Chats</button>
+
+
+      <ion-item-divider>Account</ion-item-divider>
+      <ion-item>
+        <ion-icon item-start name="contact"></ion-icon>
+        <h2><b>{{ global.session.fldforename }} {{ global.session.fldsurname }}</b></h2>
+        <hr/>
+        <h2 *ngIf="global.accessLevel==='Student'">{{ global.session.fldreg_no }}</h2>
+        <h2 *ngIf="global.accessLevel==='Employer'">{{ global.session.fldphone_no }}</h2>
+      </ion-item>
+      <button menuClose ion-item detail-none (click)="openPage(4)">
+        <ion-icon item-start name="cog"></ion-icon> Settings</button>
+      <button *ngIf="global.session" menuClose ion-item detail-none (click)="logout()">
+        <ion-icon item-start name="log-out"></ion-icon> Logout</button>
+    </ion-list>
+    <ion-list *ngIf="!global.session">
+      <button menuClose ion-item detail-none (click)="openPage(4)">
+        <ion-icon item-start name="cog"></ion-icon> Settings</button>
+    </ion-list>
+   </ion-content>
+    <ion-footer padding>
+      <ion-label text-center>
+          MSU JobShop<br>by <b>McDonald Chibanda</b>
+      </ion-label>  
+  </ion-footer>
+  </ion-menu>
+ 
+<!-- main navigation -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

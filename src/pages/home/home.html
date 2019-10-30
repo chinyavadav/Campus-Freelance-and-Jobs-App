@@ -1,0 +1,50 @@
+<!--
+  Generated template for the HomePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-navbar color="primary">
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>MSU Job Shop</ion-title>
+	</ion-navbar>
+	<ion-toolbar *ngIf="global.accessLevel==='Student'" no-border-top color="primary">
+		<ion-searchbar showCancelButton autocomplete="on" color="danger" (ionInput)="filterJobs($event)" placeholder="Filter Jobs/Task"></ion-searchbar>
+	</ion-toolbar>
+</ion-header>
+<ion-content padding *ngIf="global.accessLevel==='Student'">
+	<ion-card *ngFor="let job of jobs">
+		<ion-item>
+			<ion-avatar item-start>
+				<img src="assets/icon/job.png"/>
+			</ion-avatar>
+			<h2><b>{{ job.fldtitle }}</b></h2>
+			<p>{{job.fldcompany_name}}({{job.fldstatus}}) <br>{{ job.fldtype }}<br>{{job.fldemail}}<br>{{job.fldwebsite}}</p>
+			<button color="secondary" ion-button round outline item-end (click)="application(job)">
+				<ion-icon name="checkmark"></ion-icon> Apply
+			</button>
+		</ion-item>
+		<img src="{{ job.fldpicture }}"/>
+		<ion-card-content><p>{{ job.fldjob_description }}</p></ion-card-content>
+	</ion-card>
+</ion-content>
+<ion-content padding *ngIf="global.accessLevel=='Employer'">
+	<ion-card *ngIf="global.session.company.fldcompany_name">
+		<ion-item icon-start>
+			<ion-icon item-start name="briefcase"></ion-icon>
+			<h2><b>{{ global.session.company.fldcompany_name }}</b></h2>
+			<p><b>{{ global.session.company.fldcompany_type }}</b><br>{{ global.session.company.flddescription }}</p>
+		</ion-item>
+		<img src="{{ global.session.company.fldpicture }}"/>
+		<ion-item icon-start>
+			<ion-icon item-start name="contact"></ion-icon>
+			<p>{{ global.session.company.fldemail }}<br>{{ global.session.company.fldwebsite }}</p>
+		</ion-item>
+	</ion-card>
+	<ion-fab bottom right>
+		<button ion-fab (click)="edit()"><ion-icon name="create"></ion-icon></button>
+	</ion-fab>
+</ion-content>

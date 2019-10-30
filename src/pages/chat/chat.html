@@ -1,0 +1,54 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title (click)="viewProfile(externalAccount.flduser_id)">
+    {{externalAccount.fullname}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="call(externalAccount.fldphone_no)">
+        <ion-icon name="call"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <div class="message-wrap" *ngIf="global.session">
+    <div *ngFor="let msg of chat" class="message" [class.left]="msg.fromUserId !== global.session.flduser_id" [class.right]="msg.fromUserId === global.session.flduser_id">
+      <img class="user-img" src="assets/icon/user.png" alt="">
+      <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
+      <div class="msg-detail">
+        <div class="msg-info">
+          <p>
+            {{msg.fromUserName}}&nbsp;&nbsp;&nbsp;{{msg.time}}</p>
+        </div>
+        <div class="msg-content">
+          <span class="triangle"></span>
+          <p class="line-breaker " *ngIf="msg.type=='Text'">{{msg.message}}</p>
+          <p class="line-breaker " *ngIf="msg.type=='Image'"><img (click)="view(msg.message)" src="{{msg.message}}"/></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'">
+  <div class="input-wrap">
+    <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
+      <ion-icon name="md-happy"></ion-icon>
+    </button>
+    <textarea #chat_input
+              placeholder="Enter Message"
+              [(ngModel)]="editorMsg"
+              (keyup.enter)="sendMsg('Text')"
+              (focusin)="onFocus()">
+    </textarea>
+    <button ion-button clear icon-only item-right (click)="sendMsg('Text')">
+      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </button>
+  </div>
+  <!--emoji-picker [(ngModel)]="editorMsg"></emoji-picker-->
+</ion-footer>

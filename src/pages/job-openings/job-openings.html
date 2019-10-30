@@ -1,0 +1,49 @@
+<!--
+  Generated template for the HomePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-navbar color="primary">
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>MSU Job Shop</ion-title>
+	</ion-navbar>
+	<ion-toolbar no-border-top color="primary">
+		<ion-searchbar showCancelButton autocomplete="on" color="danger" (ionInput)="filterJobs($event)" placeholder="Filter Jobs/Task"></ion-searchbar>
+	</ion-toolbar>
+</ion-header>
+<ion-content padding>
+	<ion-card *ngFor="let job of jobs">
+		<ion-item>
+			<ion-avatar item-start>
+				<img src="assets/icon/job.png"/>
+			</ion-avatar>
+			<h2><b>{{ job.fldtitle }}</b></h2>
+			<p>{{ job.fldtype }}</p>
+			<button color="danger" *ngIf="job.fldstatus==='Closed'" ion-button round outline item-end (click)="changeStatus(job.fldjob_id,job.fldstatus)">{{ job.fldstatus }}</button>
+			<button color="secondary" *ngIf="job.fldstatus==='Open'" ion-button round outline item-end (click)="changeStatus(job.fldjob_id,job.fldstatus)">{{ job.fldstatus }}</button>
+		</ion-item>
+		<img src="{{ job.fldpicture }}"/>
+		<ion-card-content><p>{{ job.flddescription }}</p></ion-card-content>
+		<ion-row>
+			<ion-col>
+				<button ion-button block icon-start outline small (click)="edit(job)">
+					<ion-icon name="create"></ion-icon>
+					<div>Edit</div>
+				</button>
+			</ion-col>
+			<ion-col>
+				<button ion-button block icon-start color="secondary" outline small (click)="applicants(job)">
+					<ion-icon name="people"></ion-icon>
+					<div>Applicants</div>
+				</button>
+			</ion-col>
+		</ion-row>
+	</ion-card>
+	<ion-fab bottom right>
+		<button ion-fab (click)="add()"><ion-icon name="add"></ion-icon></button>
+	</ion-fab>
+</ion-content>

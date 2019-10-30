@@ -1,0 +1,37 @@
+<!--
+  Generated template for the ApplicationsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>My Applications</ion-title>
+	</ion-navbar>
+	<ion-toolbar no-border-top color="primary">
+		<ion-searchbar showCancelButton autocomplete="on" color="danger" (ionInput)="filterApplications($event)" placeholder="Filter Applications"></ion-searchbar>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-card *ngFor="let application of applications">
+		<ion-item>
+			<ion-icon item-start name="briefcase"></ion-icon>
+			<h2><b>{{ application.fldtitle }}</b></h2>
+			<p>{{ application.fldtype }}<br>{{ application.fldtimestamp }}</p>
+			<button color="danger" *ngIf="application.fldstatus==='Closed'" ion-button round outline item-end (click)="changeStatus(application.fldapplication_id,application.fldstatus)">{{ application.fldstatus }}</button>
+			<button color="secondary" *ngIf="application.fldstatus==='Open'" ion-button round outline item-end (click)="changeStatus(application.fldapplication_id,application.fldstatus)">{{ application.fldstatus }}</button>
+		</ion-item>
+		<img src="{{ application.fldpicture }}"/>
+		<ion-card-content><p><b>Justification:</b> {{ application.fldwhy }}<br>
+				<b>Bid: </b>{{ application.fldbid }}</p></ion-card-content>
+		<ion-row>
+			<ion-col>
+				<button ion-button icon-start block outline color="danger" (click)="delete(application)">
+					<ion-icon name="trash"></ion-icon>
+					<div>Delete</div>
+				</button>
+			</ion-col>
+		</ion-row>
+	</ion-card>
+</ion-content>
